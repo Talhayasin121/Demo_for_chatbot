@@ -1,0 +1,16 @@
+{
+  "name": "orlando-auto-repair-chatbot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Customer service chatbot for Orlando Auto Repair with local grounding and optional Groq streaming.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node release-tests.js",
+    "smoke": "node test-chatbot.js",
+    "build": "echo 'No build step required'"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orlando Auto Repair Chatbot</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div class="hero__card">
+          <p class="hero__eyebrow">Zero-Cost Website Chatbot</p>
+          <h1 class="hero__title">A grounded company chatbot built like a small wiki.</h1>
+          <p class="hero__copy">
+            This demo uses a retrieval-first approach inspired by the idea of turning company content into a
+            searchable wiki. Instead of improvising answers, it responds from Orlando Auto Repair's website data and
+            safely falls back when the site does not support a claim.
+          </p>
+          <div class="hero__tags">
+            <span class="hero__tag">No paid API</span>
+            <span class="hero__tag">No LangChain</span>
+            <span class="hero__tag">Static deploy</span>
+            <span class="hero__tag">Strict guardrails</span>
+          </div>
+        </div>
+        <aside class="hero__notes">
+          <h2>Why this design</h2>
+          <p>
+            Because you said you do not want to pay, this project does not use OpenAI, LangChain, Pinecone, or any
+            hosted vector database. It is a static website chatbot that can be deployed free.
+          </p>
+          <ul>
+            <li>Answers are grounded in curated website content.</li>
+            <li>Unsupported claims are refused instead of hallucinated.</li>
+            <li>Common customer intents like hours, booking, services, and warranty are handled directly.</li>
+            <li>Everything can be hosted on GitHub Pages, Netlify, or Cloudflare Pages.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="demo">
+        <div data-orlando-chatbot></div>
+      </section>
+    </main>
+
+    <script src="./knowledge-base.js"></script>
+    <script src="./chatbot-core.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

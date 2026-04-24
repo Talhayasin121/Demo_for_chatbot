@@ -1,23 +1,11 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "**/*",
-      "use": "@vercel/static"
-    }
+    { "src": "api/chat.js", "use": "@vercel/node" },
+    { "src": "api/health.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/api/health",
-      "dest": "/api/health.js"
-    },
-    {
-      "src": "/api/chat",
-      "dest": "/api/chat.js"
-    }
+    { "src": "/api/chat", "dest": "/api/chat.js" },
+    { "src": "/api/health", "dest": "/api/health.js" }
   ]
 }

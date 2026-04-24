@@ -319,9 +319,18 @@
   launcher.addEventListener("click", function () {
     setOpen(panel.hidden);
     if (!panel.hidden && messagesContainer.children.length === 0) {
-      submitQuery("Hello");
+      addWelcomeMessage();
     }
   });
+
+  function addWelcomeMessage() {
+    var wrapper = document.createElement("div");
+    wrapper.className = "oar-widget__message oar-widget__message--assistant";
+    wrapper.innerHTML = '<div class="oar-widget__bubble"><p>Hi! How can I help you today?</p></div>';
+    messagesContainer.appendChild(wrapper);
+    renderQuickReplies();
+    scrollToBottom();
+  }
 
   closeButton.addEventListener("click", function () {
     setOpen(false);

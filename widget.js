@@ -37,8 +37,7 @@
   var quickReplies = [
     "What services do you offer?",
     "What are your hours?",
-    "How do I book an appointment?",
-    "Do you offer a warranty?"
+    "How do I book?"
   ];
 
   var root = document.createElement("div");
@@ -95,7 +94,7 @@
     ".oar-widget__launcher{display:flex;align-items:center;justify-content:center;width:60px;height:60px;border:0;border-radius:30px;background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;box-shadow:0 8px 32px rgba(15,23,42,.4);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1)}" +
     ".oar-widget__launcher:hover{transform:scale(1.05);box-shadow:0 12px 40px rgba(15,23,42,.5)}" +
     ".oar-widget__launcher-icon{display:flex;width:26px;height:26px}" +
-    ".oar-widget__panel{position:absolute;bottom:80px;width:380px;max-width:calc(100vw - 48px);height:560px;max-height:calc(100vh - 140px);background:#fff;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 20px 60px rgba(15,23,42,.2);overflow:hidden;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:all .3s cubic-bezier(.4,0,.2,1)}" +
+    ".oar-widget__panel{position:absolute;bottom:80px;width:360px;max-width:calc(100vw - 48px);height:520px;max-height:calc(100vh - 140px);background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 20px 60px rgba(15,23,42,.2);overflow:hidden;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:all .3s cubic-bezier(.4,0,.2,1)}" +
     ".oar-widget--open .oar-widget__panel{opacity:1;visibility:visible}" +
     ".oar-widget--right .oar-widget__panel{right:0}.oar-widget--left .oar-widget__panel{left:0}" +
     ".oar-widget__panel-header{display:flex;align-items:center;gap:12px;padding:16px 18px;background:#f8fafc;border-bottom:1px solid #e2e8f0;flex-shrink:0}" +
@@ -109,21 +108,22 @@
     ".oar-widget__close{display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border:0;border-radius:10px;background:transparent;color:#64748b;cursor:pointer;transition:all .2s}" +
     ".oar-widget__close:hover{background:#f1f5f9;color:#0f172a}" +
     ".oar-widget__close svg{width:18px;height:18px}" +
-    ".oar-widget__messages{flex:1;padding:16px;overflow-y:auto;background:#f8fafc}" +
+    ".oar-widget__messages{flex:1;min-height:0;padding:16px;overflow-y:auto;background:#f8fafc;display:flex;flex-direction:column}" +
     ".oar-widget__message{display:flex;margin-bottom:12px;animation:.25s ease}" +
+    ".oar-widget__message:last-child{margin-bottom:auto}" +
     ".oar-widget__message--user{justify-content:flex-end}" +
-    ".oar-widget__bubble{max-width:80%;padding:12px 16px;border-radius:18px;border-bottom-right-radius:4px;font-size:.9rem;line-height:1.5}" +
-    ".oar-widget__message--user .oar-widget__bubble{background:#0f172a;color:#fff;border-bottom-right-radius:18px;border-bottom-left-radius:4px}" +
+    ".oar-widget__bubble{max-width:85%;padding:10px 14px;border-radius:16px;border-bottom-right-radius:4px;font-size:.85rem;line-height:1.45;word-wrap:break-word}" +
+    ".oar-widget__message--user .oar-widget__bubble{background:#0f172a;color:#fff;border-bottom-right-radius:16px;border-bottom-left-radius:4px}" +
     ".oar-widget__message--assistant .oar-widget__bubble{background:#fff;color:#1e293b;border:1px solid #e2e8f0;border-bottom-left-radius:4px}" +
     ".oar-widget__bubble p{margin:0}" +
-    ".oar-widget__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}" +
-    ".oar-widget__action{display:inline-flex;padding:8px 14px;background:#fef3c7;border:1px solid #fcd34d;border-radius:999px;font-size:.8rem;font-weight:500;color:#92400e;text-decoration:none;cursor:pointer;transition:all .2s}" +
+    ".oar-widget__actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}" +
+    ".oar-widget__action{display:inline-flex;padding:6px 12px;background:#fef3c7;border:1px solid #fcd34d;border-radius:999px;font-size:.75rem;font-weight:500;color:#92400e;text-decoration:none;cursor:pointer;transition:all .2s}" +
     ".oar-widget__action:hover{background:#fde68a}" +
-    ".oar-widget__thinking{display:flex;gap:4px;padding:12px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:18px;border-bottom-left-radius:4px;width:fit-content}" +
-    ".oar-widget__thinking-dot{width:8px;height:8px;background:#94a3b8;border-radius:50%;animation:1.4s ease-in-out infinite both}" +
+    ".oar-widget__thinking{display:flex;gap:4px;padding:10px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:16px;border-bottom-left-radius:4px;width:fit-content}" +
+    ".oar-widget__thinking-dot{width:6px;height:6px;background:#94a3b8;border-radius:50%;animation:1.4s ease-in-out infinite both}" +
     ".oar-widget__thinking-dot:nth-child(1){animation-delay:-.32s}.oar-widget__thinking-dot:nth-child(2){animation-delay:-.16s}@-webkit-keyframes oarBounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1);opacity:1}}@keyframes oarBounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1);opacity:1}}" +
-    ".oar-widget__quick-replies{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;border-top:1px solid #f1f5f9;flex-shrink:0}" +
-    ".oar-widget__chip{display:inline-flex;padding:8px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:999px;font-size:.8rem;font-weight:500;color:#475569;cursor:pointer;transition:all .2s}" +
+    ".oar-widget__quick-replies{display:flex;flex-wrap:wrap;gap:6px;padding:10px 16px;border-top:1px solid #f1f5f9;flex-shrink:0;max-height:80px;overflow-y:auto}" +
+    ".oar-widget__chip{display:inline-flex;padding:6px 10px;background:#fff;border:1px solid #e2e8f0;border-radius:999px;font-size:.75rem;font-weight:500;color:#475569;cursor:pointer;transition:all .2s}" +
     ".oar-widget__chip:hover{background:#f1f5f9;border-color:#cbd5e1}" +
     ".oar-widget__composer{display:flex;gap:10px;padding:14px 16px;background:#fff;border-top:1px solid #e2e8f0;flex-shrink:0}" +
     ".oar-widget__input{flex:1;padding:12px 16px;border:1px solid #e2e8f0;border-radius:12px;font-family:inherit;font-size:.9rem;background:#f8fafc;color:#1e293b;outline:none;transition:all .2s}" +

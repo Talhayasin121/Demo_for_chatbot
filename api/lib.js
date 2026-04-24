@@ -1,28 +1,14 @@
-const fs = require("fs");
-const path = require("path");
-const vm = require("vm");
+let data, engine, grounder;
 
-function load(file, globalName) {
-  const code = fs.readFileSync(path.join(__dirname, "..", file), "utf8");
-  const sandbox = { module: { exports: {} }, exports: {}, console };
-  sandbox.globalThis = sandbox;
-  vm.runInNewContext(code, sandbox, { filename: file });
-
-  if (
-    sandbox.module &&
-    (typeof sandbox.module.exports === "function" ||
-      (sandbox.module.exports && Object.keys(sandbox.module.exports).length))
-  ) {
-    return sandbox.module.exports;
-  }
-
-  return sandbox[globalName];
+try {
+  data = require("../knowledge-base.js");
+  engine = require("../chatbot-core.js").createOrlandoChatbotEngine(data);
+  grounder = require("../grounding.js").createOrlandoGrounder(data);
+} catch (e) {
+  console.error("Failed to load modules:", e.message);
+  data = { company: {}, quickReplies: [], knowledgeBase: [] };
+  engine = { respond: () => ({ text: "Service temporarily unavailable.", actions: [] }) };
+  grounder = { buildContext: () => ({ matches: [], contextText: "", score: 0, citations: [] }) };
 }
-
-const data = load("knowledge-base.js", "OrlandoChatbotData");
-const createEngine = load("chatbot-core.js", "createOrlandoChatbotEngine");
-const createGrounder = load("grounding.js", "createOrlandoGrounder");
-const engine = createEngine(data);
-const grounder = createGrounder(data);
 
 module.exports = { data, engine, grounder };

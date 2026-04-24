@@ -6,20 +6,9 @@
       "use": "@vercel/node"
     },
     {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "embed.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "styles.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "widget.js",
-      "use": "@vercel/static"
+      "src": "**/*",
+      "use": "@vercel/static",
+      "ignore": ["embed-code.html"]
     }
   ],
   "routes": [

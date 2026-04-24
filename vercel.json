@@ -7,8 +7,7 @@
     },
     {
       "src": "**/*",
-      "use": "@vercel/static",
-      "ignore": ["embed-code.html"]
+      "use": "@vercel/static"
     }
   ],
   "routes": [

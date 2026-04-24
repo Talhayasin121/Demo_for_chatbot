@@ -3,7 +3,7 @@ const path = require("path");
 const vm = require("vm");
 
 function load(file, globalName) {
-  const code = fs.readFileSync(path.join(__dirname, "..", file), "utf8");
+  const code = fs.readFileSync(path.join(__dirname, file), "utf8");
   const sandbox = { module: { exports: {} }, exports: {}, console };
   sandbox.globalThis = sandbox;
   vm.runInNewContext(code, sandbox, { filename: file });

@@ -65,18 +65,24 @@ async function streamGroqCompletion(req, res) {
   if (!apiKey) {
     writeNdjson(res, {
       type: "error",
-      message: "Missing GROQ_API_KEY on the server."
+      message: "Missing GROQ_API_KEY"
     });
     res.end();
     return;
   }
 
   let body = "";
-  for await (const chunk of req) {
-    body += chunk;
-  }
+  req.on("data", (chunk) => { body += chunk; });
+  
+  await new Promise((resolve) => req.on("end", resolve));
 
-  const requestBody = body ? JSON.parse(body) : {};
+  let requestBody = {};
+  try {
+    requestBody = body ? JSON.parse(body) : {};
+  } catch (e) {
+    requestBody = {};
+  }
+  
   const message = String(requestBody.message || "").trim();
   const history = Array.isArray(requestBody.history) ? requestBody.history : [];
 

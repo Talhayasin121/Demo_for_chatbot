@@ -1,22 +1,23 @@
-let data, engine, grounder;
+const fs = require("fs");
+const path = require("path");
+const vm = require("vm");
 
-try {
-  const kbModule = require("./knowledge-base.js");
-  const kb = typeof kbModule === 'function' ? kbModule() : (kbModule.default || kbModule);
-  data = kb;
-  
-  const coreModule = require("./chatbot-core.js");
-  const createEngine = typeof coreModule === 'function' ? coreModule : (coreModule.default || coreModule.createOrlandoChatbotEngine || coreModule);
-  engine = createEngine(data);
-  
-  const groundModule = require("./grounding.js");
-  const createGrounder = typeof groundModule === 'function' ? groundModule : (groundModule.default || groundModule.createOrlandoGrounder || groundModule);
-  grounder = createGrounder(data);
-} catch (e) {
-  console.error("Module load error:", e.message);
-  data = { company: {}, quickReplies: [], knowledgeBase: [] };
-  engine = { respond: () => ({ text: "Service temporarily unavailable.", actions: [] }) };
-  grounder = { buildContext: () => ({ matches: [], contextText: "", score: 0, citations: [] }) };
+function load(file, globalName) {
+  const code = fs.readFileSync(path.join(__dirname, "..", file), "utf8");
+  const sandbox = { module: { exports: {} }, exports: {}, console };
+  sandbox.globalThis = sandbox;
+  vm.runInNewContext(code, sandbox, { filename: file });
+
+  if (sandbox.module && (typeof sandbox.module.exports === "function" || (sandbox.module.exports && Object.keys(sandbox.module.exports).length))) {
+    return sandbox.module.exports;
+  }
+  return sandbox[globalName];
 }
+
+const data = load("knowledge-base.js", "OrlandoChatbotData");
+const createEngine = load("chatbot-core.js", "createOrlandoChatbotEngine");
+const createGrounder = load("grounding.js", "createOrlandoGrounder");
+const engine = createEngine(data);
+const grounder = createGrounder(data);
 
 module.exports = { data, engine, grounder };
